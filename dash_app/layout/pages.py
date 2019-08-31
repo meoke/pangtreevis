@@ -333,7 +333,7 @@ _missing_data_form = dbc.Collapse([dbc.FormGroup(
         dbc.Label("Missing symbol for unknown nucleotides/proteins", html_for=id_fasta_provider_choice,
                   width=3, className="poapangenome_label"),
         dbc.Col([dbc.Input(value="?",
-                           id=id_missing_symbol_input, type='text', maxlength=1, minlength=1),
+                           id=id_missing_symbol_input, type='text', maxLength=1, minLength=1),
                  dbc.FormText(
                      "Any single character is accepted but it must be present in BLOSUM file. Default BLOSUM file uses '?'.",
                      color="secondary",
