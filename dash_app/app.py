@@ -6,9 +6,8 @@ from .server import app
 from .layout import layout_ids, pages
 
 app.title = 'PoaPangenome'
-# app.css.config.serve_locally = True
-# app.scripts.config.serve_locally = True
-
+app.config.suppress_callback_exceptions = True
+draw_poagraph = True
 
 external_css = [
     'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
@@ -17,37 +16,20 @@ external_css = [
 for css in external_css:
     app.css.append_css({"external_url": css})
 
-app.config.suppress_callback_exceptions = True
-draw_poagraph = True
-app.layout = html.Div(
-    [dcc.Location(id=layout_ids.id_url, refresh=False),
-     dbc.Navbar(
-         [
-             html.A(
-                 dbc.Row(
-                     [
-                         dbc.Col(html.Img(src="assets/favicon.ico", height="30px")),
-                         dbc.Col(dbc.NavbarBrand("Pangtree", className="ml-2")),
-                     ],
-                     align="center",
-                     no_gutters=True,
-                 ),
+app.layout = html.Div([
+    dcc.Location(id=layout_ids.id_url, refresh=False),
+    html.Div([], className="area"),
+    dbc.Navbar([
+        html.Ul([
+            html.Li(html.A([html.I(className="fas fa-info-circle"), html.Span("Index", className="nav-text")], href="/#")),
+            html.Li(html.A([html.I(className="fas fa-tools"), html.Span("Tools", className="nav-text")], href="/tools"), className="has-subnav"),
+            html.Li(html.A([html.I(className="fas fa-archive"), html.Span("Package", className="nav-text")], href="/package"), className="has-subnav"),
+            html.Li(html.A([html.I(className="fas fa-address-book"), html.Span("Contact", className="nav-text")], href="/contact"), className="has-subnav"),
+        ])
+    ], className="main-menu", sticky="left"),
+    html.Div(id=layout_ids.id_page_content)
+])
 
-                 href="/#",
-             ),
-             dbc.NavbarToggler(id="navbar-toggler"),
-             dbc.Collapse(dbc.Row(children=[
-                 dbc.Col(dbc.NavLink("Tools", href="/tools")),
-                 dbc.Col(dbc.NavLink("Package", href="/package")),
-                 dbc.Col(dbc.NavLink("Contact", href="/contact")),
-             ],
-                 no_gutters=True,
-                 className="ml-auto flex-nowrap mt-3 mt-md-0",
-                 align="center"), id="navbar-collapse", navbar=True)
-         ],
-         sticky="top",
-     ),
-     html.Div(id=layout_ids.id_page_content)])
 
 @app.callback(
     Output("navbar-collapse", "is_open"),
@@ -71,11 +53,3 @@ def display_page(pathname):
         return pages.contact()
     else:
         return pages.index()
-
-from .callbacks import consensustable
-from .callbacks import consensustree
-from .callbacks import mafgraph
-from .callbacks import poagraph
-
-from .callbacks import poapangenome
-from .callbacks import visualisation
