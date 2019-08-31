@@ -21,10 +21,14 @@ app.layout = html.Div([
     html.Div([], className="area"),
     dbc.Navbar([
         html.Ul([
-            html.Li(html.A([html.I(className="fas fa-info-circle"), html.Span("Index", className="nav-text")], href="/#")),
-            html.Li(html.A([html.I(className="fas fa-tools"), html.Span("Tools", className="nav-text")], href="/tools"), className="has-subnav"),
-            html.Li(html.A([html.I(className="fas fa-archive"), html.Span("Package", className="nav-text")], href="/package"), className="has-subnav"),
-            html.Li(html.A([html.I(className="fas fa-address-book"), html.Span("Contact", className="nav-text")], href="/contact"), className="has-subnav"),
+            html.Li(html.A([html.I(className="fas fa-info-circle"), html.Span("Index", className="nav-text")],
+                           href="/#")),
+            html.Li(html.A([html.I(className="fas fa-tools"), html.Span("Tools", className="nav-text")],
+                           href="/tools"), className="has-subnav"),
+            html.Li(html.A([html.I(className="fas fa-archive"), html.Span("Package", className="nav-text")],
+                           href="/package"), className="has-subnav"),
+            html.Li(html.A([html.I(className="fas fa-address-book"), html.Span("Contact", className="nav-text")],
+                           href="/contact"), className="has-subnav"),
         ])
     ], className="main-menu", sticky="left"),
     html.Div(id=layout_ids.id_page_content)
@@ -53,3 +57,12 @@ def display_page(pathname):
         return pages.contact()
     else:
         return pages.index()
+
+
+from .callbacks import consensustable
+from .callbacks import consensustree
+from .callbacks import mafgraph
+from .callbacks import poagraph
+
+from .callbacks import poapangenome
+from .callbacks import visualisation
