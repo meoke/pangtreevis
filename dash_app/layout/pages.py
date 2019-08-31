@@ -17,8 +17,8 @@ def contact():
                 [
                     dbc.CardBody(
                         [
-                            dbc.CardTitle("Norbert Dojer, PhD.", className="text-info"),
-                            dbc.CardText(html.P("dojer@mimuw.edu.pl")),
+                            html.H5("Norbert Dojer, PhD.", className="card-title text-info"),
+                            html.P(html.P("dojer@mimuw.edu.pl"), className='card-text'),
                         ]
                     ),
                 ],
@@ -29,8 +29,8 @@ def contact():
                 [
                     dbc.CardBody(
                         [
-                            dbc.CardTitle("Paulina Dziadkiewicz, B.Sc.", className="text-info"),
-                            dbc.CardText("pedziadkiewicz@gmail.com"),
+                            html.H5("Paulina Dziadkiewicz, B.Sc.", className="card-title text-info"),
+                            html.P("pedziadkiewicz@gmail.com", className='card-text'),
                         ]
                     )
                 ],
@@ -64,7 +64,7 @@ def index():
                                                             className="col-md-9 my-auto")])),
                                 dbc.CardBody(
                                     [
-                                        dbc.CardText(
+                                        html.P(
                                             html.Ul([html.Li(
                                                 ["Input formats: ",
                                                  html.A("MAF",
@@ -79,7 +79,7 @@ def index():
                                                 html.Li(["Cycles in graph removed with ", html.A("Mafgraph",
                                                                                                  href="https://github.com/anialisiecka/Mafgraph",
                                                                                                  target="_blank")]),
-                                                html.Li("Complement missing parts from NCBI or fasta")]))
+                                                html.Li("Complement missing parts from NCBI or fasta")]), className='card-text')
                                     ]
                                 ),
                             ]
@@ -92,7 +92,7 @@ def index():
                                                                className="col-md-9 my-auto")])),
                                 dbc.CardBody(
                                     [
-                                        dbc.CardText(
+                                        html.P(
                                             ["This tool extends Partial Order Alignment (POA) algorithm introduced by ",
                                              html.A("Lee et al.",
                                                     href="https://doi.org/10.1093/bioinformatics/18.3.452",
@@ -103,7 +103,7 @@ def index():
                                                                " - a structure similar to phylogenetic tree but it has a consensus assigned to every node"]),
                                                       html.Li([html.Strong("Compatibility"),
                                                                " - a measure of similarity between sequence and consensus"])])
-                                             ]),
+                                             ], className='card-text'),
                                     ]
                                 ),
                             ]
@@ -116,14 +116,14 @@ def index():
                                                                className="col-md-9 my-auto")])),
                                 dbc.CardBody(
                                     [
-                                        dbc.CardText(
+                                        html.P(
                                             [
                                                 html.Ul([html.Li(
                                                     "MAF blocks graph"),
                                                     html.Li("Multiple sequence alignment as Partial Order Graph"),
                                                     html.Li("Consensus tree"),
                                                     html.Li("Compatibilities relations")]
-                                                )])
+                                                )], className='card-text')
                                     ]
                                 ),
                             ]
@@ -168,57 +168,6 @@ def package():
 
 def tools():
     return html.Div([
-        # dbc.Jumbotron(children=[dbc.Row(
-        #     [dbc.Col(dbc.Card(
-        #         [
-        #             dbc.CardBody(
-        #                 [
-        #                     dbc.CardText(
-        #                         html.Ul([html.Li(
-        #                             [html.Span(html.I(className="fas fa-file"), className="fa-li"), "multialignment ",
-        #                              html.A("MAF",
-        #                                     href="http://www1.bioinf.uni-leipzig.de/UCSC/FAQ/FAQformat.html#format5",
-        #                                     target="_blank"), " or ",
-        #                              html.A("PO",
-        #                                     href="https://github.com/meoke/pang/blob/master/README.md#po-file-format-specification",
-        #                                     target="_blank")]),
-        #                             html.Li([html.Span(html.I(className="fas fa-file"), className="fa-li"),
-        #                                      "metadata CSV"]),
-        #                             html.Li([html.Span(html.I(className="fas fa-sliders-h"), className="fa-li"),
-        #                                      "additional parameters"])], className="fa-ul")
-        #                     )
-        #                 ]
-        #             ),
-        #         ], outline=True
-        #     ), className="col-md-2 offset-md-1"),
-        #         dbc.Col(html.I(className="fas fa-long-arrow-alt-right fa-3x"),
-        #                 className="col-md-1 my-auto text-center"),
-        #         dbc.Col(html.H2(dbc.Badge("PoaPangenome", className="page_elem badge-pill")),
-        #                 className="col-md-2 my-auto"),
-        #         dbc.Col(html.I(className="fas fa-long-arrow-alt-right fa-3x"),
-        #                 className="col-md-1 my-auto text-center"),
-        #         dbc.Col(dbc.Card(
-        #             [
-        #                 dbc.CardBody(
-        #                     [
-        #                         dbc.CardText(dbc.Row(
-        #                             [
-        #                                 dbc.Col(html.I(className="fas fa-file"), className="col-md-3"),
-        #                                 dbc.Col("pangenome.json"),
-        #                             ],
-        #                             align="center",
-        #                             no_gutters=True,
-        #                         ))
-        #                     ]
-        #                 ),
-        #             ]
-        #         ), className="col-md-2 my-auto"),
-        #         dbc.Col(html.I(className="fas fa-long-arrow-alt-right fa-3x"),
-        #                 className="col-md-1 my-auto text-center"),
-        #         dbc.Col(html.H2(dbc.Badge("PangViz", className="page_elem badge-pill badge-block")),
-        #                 className="col-md-2 my-auto"),
-        #     ]
-        # )]),
         dbc.Tabs(
             [
                 dbc.Tab(_poapangenome_tab_content, id=id_poapangenome_tab, label="PangTreeBuild",
@@ -495,42 +444,6 @@ _poapangenome_tab_content = html.Div([
                     dbc.Col(dbc.Button("Run", id=id_pang_button, color="primary", className="offset-md-5 col-md-4 ")),
                     dbc.Col(dcc.Loading(id="l2", children=html.Div(id=id_running_indicator), type="default")))
             ], className="col-md-6 offset-md-1", id='poapangenome_form'),
-        # dbc.Col([
-        #     html.H3("Example Input Data"),
-        #     dbc.Card(
-        #         [
-        #             dbc.CardHeader(
-        #                 dbc.Button("Simulated", id="collapse_fabricated_button",
-        #                            className="mb-3 btn-block my-auto opac-button")),
-        #             dbc.Collapse(
-        #                 id="fabricated_collapse",
-        #                 children=
-        #                 dbc.CardBody(
-        #                     [
-        #                         dbc.CardText(["This dataset is very small and consists of fabricated sequences."
-        #                                       "Its aim is to demonstrate how the processing and visualisation works",
-        #                                       html.Button("a", className="btn btn-primary btn-block dataset")]),
-        #                     ]
-        #                 )),
-        #         ]
-        #     ),
-        #     dbc.Card(
-        #         [
-        #             dbc.CardHeader(
-        #                 dbc.Button("Ebola", id="collapse-ebola-button",
-        #                            className="mb-3 btn-block my-auto opac-button")),
-        #             dbc.Collapse(
-        #                 id="ebola_collapse",
-        #                 children=dbc.CardBody(
-        #                     [
-        #                         dbc.CardText(["This dataset orginates from ", html.A("UCSC Ebola Portal",
-        #                                                                              href="https://genome.ucsc.edu/ebolaPortal/",
-        #                                                                              target="_blank")]),
-        #                     ]
-        #                 ))
-        #         ],
-        #     ),
-        # ], className="col-md-3 offset-md-1")
     ], className="poapangenome_content"),
     dbc.Collapse(id=id_poapangenome_result, children=dbc.Row(
         children=[dbc.Col([dbc.Row([html.I(id=id_result_icon), html.H3("Task completed!", className="next_to_icon")]),
@@ -799,11 +712,11 @@ def get_task_description_layout(jsonpangenome: PangenomeJSON) -> dbc.CardDeck():
                 [
                     dbc.CardBody(
                         [
-                            dbc.CardText([
+                            html.P([
                                 html.P(f"Multialignment: {jsonpangenome.task_parameters.multialignment_file_path}"),
                                 html.P(f"Metadata : {jsonpangenome.task_parameters.metadata_file_path}"),
                                 fasta_provider_paragraph
-                            ]
+                            ], className='card-text'
                             ),
                         ]
                     ),
@@ -816,10 +729,10 @@ def get_task_description_layout(jsonpangenome: PangenomeJSON) -> dbc.CardDeck():
                 [
                     dbc.CardBody(
                         [
-                            dbc.CardText([
+                            html.P([
                                              html.P(f"Algorithm: {jsonpangenome.task_parameters.consensus_type}"),
                                              html.P(f"Blosum file: {jsonpangenome.task_parameters.blosum_file_path}")]
-                                         + cons_type_paragraph
+                                         + cons_type_paragraph, className='card-text'
 
                                          ),
                         ]
@@ -833,12 +746,12 @@ def get_task_description_layout(jsonpangenome: PangenomeJSON) -> dbc.CardDeck():
                 [
                     dbc.CardBody(
                         [
-                            dbc.CardText([
+                            html.P([
                                 html.P(f"Time: {jsonpangenome.task_parameters.running_time}"),
                                 html.P(f"Poagraph nodes count: {len(jsonpangenome.nodes)}"),
                                 html.P(f"Sequences count: {len(jsonpangenome.sequences)}"),
                                 html.P(f"Consensuses count: {len(jsonpangenome.consensuses)}"),
-                            ]
+                            ], className='card-text'
                             ),
                         ]
                     ),
