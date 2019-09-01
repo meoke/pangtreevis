@@ -11,7 +11,7 @@ draw_poagraph = True
 
 external_css = [
     'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
-    dbc.themes.FLATLY
+    # dbc.themes.FLATLY
 ]
 for css in external_css:
     app.css.append_css({"external_url": css})
@@ -21,17 +21,17 @@ app.layout = html.Div([
     html.Div([], className="area"),
     dbc.Navbar([
         html.Ul([
-            html.Li(html.A([html.I(className="fas fa-info-circle"), html.Span("Index", className="nav-text")],
-                           href="/#")),
-            html.Li(html.A([html.I(className="fas fa-tools"), html.Span("Tools", className="nav-text")],
-                           href="/tools"), className="has-subnav"),
-            html.Li(html.A([html.I(className="fas fa-archive"), html.Span("Package", className="nav-text")],
-                           href="/package"), className="has-subnav"),
-            html.Li(html.A([html.I(className="fas fa-address-book"), html.Span("Contact", className="nav-text")],
-                           href="/contact"), className="has-subnav"),
+            html.Li(html.A([html.I(className="fas fas-nav fa-info-circle"), html.Span("Index", className="nav-text")],
+                           href="/#"), className="high"),
+            html.Li(html.A([html.I(className="fas fas-nav fa-tools"), html.Span("Tools", className="nav-text")],
+                           href="/tools"), className="has-subnav high"),
+            html.Li(html.A([html.I(className="fas fas-nav fa-archive"), html.Span("Package", className="nav-text")],
+                           href="/package"), className="has-subnav high"),
+            html.Li(html.A([html.I(className="fas fas-nav fa-address-book"), html.Span("Contact", className="nav-text")],
+                           href="/contact"), className="has-subnav high"),
         ])
     ], className="main-menu", sticky="left"),
-    html.Div(id=layout_ids.id_page_content)
+    html.Div(id=layout_ids.id_page_content, style={'margin-left': '60px'})
 ])
 
 

@@ -13,7 +13,7 @@
 }
 
 .logo{
-    color: green;
+    color: #272635;
 }
 
 
@@ -119,8 +119,12 @@ a{
 }
 
 
-.navbar, .jumbotron{
-    background-color: rgba(221, 226, 233, 1) !important;
+.navbar{
+    background-color: #272635 !important;
+}
+
+.jumbotron{
+    background-color: #75bba7 !important;
 }
 
 .rc-slider-handle, .rc-slider-dot-active, .tools_tab{

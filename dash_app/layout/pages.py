@@ -37,14 +37,19 @@ def contact():
 def index():
     return dbc.Container(
         html.Div([
-            dbc.Jumbotron(children=[dbc.Row([
-                dbc.Col([
-                    html.H2("PangTreeBuild"),
-                    html.P("is a tool for multiple sequence alignment analysis."),
-                    html.H2("PangTreeVis"),
-                    html.P("visualises the results in browser.")
-                ], className="col-md-8"),
-                dbc.Col(html.I(className="fas fa-seedling fa-10x logo"), className="col-md-4")])]),
+            dbc.Jumbotron(children=[
+                dbc.Row([
+                    dbc.Col([
+                        html.I(className="fas fa-seedling fa-3x logo"),
+                        html.H4("PangTreeBuild"),
+                        html.P("tool for multiple sequence alignment analysis."),
+                    ], className="col-md-6", style={'text-align': 'center'}),
+                    dbc.Col([
+                        html.I(className="fas fa-tree fa-3x logo"),
+                        html.H4("PangTreeVis"),
+                        html.P("visualises the results in browser.")
+                    ], className="col-md-6", style={'text-align': 'center'}),
+                ])]),
             dbc.Row(dbc.CardDeck([
                 dbc.Card([
                     dbc.CardHeader(dbc.Row([
