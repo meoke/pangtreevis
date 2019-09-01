@@ -63,6 +63,5 @@ from .callbacks import consensustable
 from .callbacks import consensustree
 from .callbacks import mafgraph
 from .callbacks import poagraph
-
 from .callbacks import poapangenome
 from .callbacks import visualisation

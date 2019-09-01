@@ -4,6 +4,7 @@ import dash_core_components as dcc
 from pangtreebuild.output.PangenomeJSON import PangenomeJSON
 
 from .layout_ids import *
+from .pangtreebuild import pangtreebuild_tab
 import dash_cytoscape as cyto
 import dash_table
 from ..components import mafgraph as mafgraph_component
@@ -11,127 +12,112 @@ from ..components import poagraph as poagraph_component
 
 
 def contact():
-    return dbc.Container(
-        [
-            dbc.Card(
-                [
-                    dbc.CardBody(
-                        [
-                            html.H5("Norbert Dojer, PhD.", className="card-title text-info"),
-                            html.P(html.P("dojer@mimuw.edu.pl"), className='card-text'),
-                        ]
-                    ),
-                ],
-                outline=True,
-                color="info"
-            ),
-            dbc.Card(
-                [
-                    dbc.CardBody(
-                        [
-                            html.H5("Paulina Dziadkiewicz, B.Sc.", className="card-title text-info"),
-                            html.P("pedziadkiewicz@gmail.com", className='card-text'),
-                        ]
-                    )
-                ],
-                outline=True,
-                color="info",
-            )
-        ]
-    )
+    return dbc.Container([
+        dbc.Card([
+            dbc.CardBody([
+                html.H5("Norbert Dojer, PhD.", className="card-title text-info"),
+                html.P(html.P("dojer@mimuw.edu.pl"), className='card-text'),
+            ]),
+        ], outline=True, color="info"),
+        dbc.Card([
+            dbc.CardBody([
+                html.H5("Paulina Dziadkiewicz, B.Sc.", className="card-title text-info"),
+                html.P("pedziadkiewicz@gmail.com", className='card-text'),
+            ])
+        ], outline=True, color="info"),
+        dbc.Card([
+            dbc.CardBody([
+                html.H5("Paulina Knut, B.Sc.", className="card-title text-info"),
+                html.P("paulina.knut@gmail.com", className='card-text'),
+            ])
+        ], outline=True, color="info")
+    ])
 
 
 def index():
     return dbc.Container(
         html.Div([
-            dbc.Jumbotron(children=[dbc.Row(
-                [dbc.Col([html.H2("PangTreeBuild"),
-                          html.P("is a tool for multiple sequence alignment analysis."),
-                          html.H2("PangTreeVis"),
-                          html.P("visualises the results in browser.")
-                          ],
-                         className="col-md-8"),
-                 dbc.Col(html.I(className="fas fa-seedling fa-10x logo"), className="col-md-4")])]),
-            dbc.Row(
-                dbc.CardDeck(
-                    [
-                        dbc.Card(
-                            [
-                                dbc.CardHeader(dbc.Row([dbc.Col(html.I(className="fas fa-bezier-curve fa-2x"),
-                                                                className="col-md-3 my-auto"),
-                                                        html.P(
-                                                            "Build graph representation of multiple sequence alignment",
-                                                            className="col-md-9 my-auto")])),
-                                dbc.CardBody(
-                                    [
-                                        html.P(
-                                            html.Ul([html.Li(
-                                                ["Input formats: ",
-                                                 html.A("MAF",
-                                                        href="http://www1.bioinf.uni-leipzig.de/UCSC/FAQ/FAQformat.html#format5",
-                                                        target="_blank"), ", ",
-                                                 html.A("PO",
-                                                        href="https://github.com/meoke/pang/blob/master/README.md#po-file-format-specification",
-                                                        target="_blank")]),
-                                                html.Li(["Internal representation: ", html.A("Partial Order graph",
-                                                                                             href="https://doi.org/10.1093/bioinformatics/18.3.452",
-                                                                                             target="_blank")]),
-                                                html.Li(["Cycles in graph removed with ", html.A("Mafgraph",
-                                                                                                 href="https://github.com/anialisiecka/Mafgraph",
-                                                                                                 target="_blank")]),
-                                                html.Li("Complement missing parts from NCBI or fasta")]), className='card-text')
-                                    ]
-                                ),
-                            ]
-                        ),
-                        dbc.Card(
-                            [
-                                dbc.CardHeader(dbc.Row([dbc.Col(html.I(className="fas fa-grip-lines fa-2x"),
-                                                                className="col-md-3 my-auto"),
-                                                        html.P("Find sequences consensus",
-                                                               className="col-md-9 my-auto")])),
-                                dbc.CardBody(
-                                    [
-                                        html.P(
-                                            ["This tool extends Partial Order Alignment (POA) algorithm introduced by ",
-                                             html.A("Lee et al.",
-                                                    href="https://doi.org/10.1093/bioinformatics/18.3.452",
-                                                    target="_blank"), ". It provides:",
-                                             html.Ul([html.Li([html.Strong("Consensuses"),
-                                                               " - agreed representations of input subsets"]),
-                                                      html.Li([html.Strong("Consensus Tree"),
-                                                               " - a structure similar to phylogenetic tree but it has a consensus assigned to every node"]),
-                                                      html.Li([html.Strong("Compatibility"),
-                                                               " - a measure of similarity between sequence and consensus"])])
-                                             ], className='card-text'),
-                                    ]
-                                ),
-                            ]
-                        ),
-                        dbc.Card(
-                            [
-                                dbc.CardHeader(dbc.Row([dbc.Col(html.I(className="fas fa-eye fa-2x"),
-                                                                className="col-md-3 my-auto"),
-                                                        html.P("Visualise results",
-                                                               className="col-md-9 my-auto")])),
-                                dbc.CardBody(
-                                    [
-                                        html.P(
-                                            [
-                                                html.Ul([html.Li(
-                                                    "MAF blocks graph"),
-                                                    html.Li("Multiple sequence alignment as Partial Order Graph"),
-                                                    html.Li("Consensus tree"),
-                                                    html.Li("Compatibilities relations")]
-                                                )], className='card-text')
-                                    ]
-                                ),
-                            ]
-                        ),
-                    ]
-                )
-            )
-
+            dbc.Jumbotron(children=[dbc.Row([
+                dbc.Col([
+                    html.H2("PangTreeBuild"),
+                    html.P("is a tool for multiple sequence alignment analysis."),
+                    html.H2("PangTreeVis"),
+                    html.P("visualises the results in browser.")
+                ], className="col-md-8"),
+                dbc.Col(html.I(className="fas fa-seedling fa-10x logo"), className="col-md-4")])]),
+            dbc.Row(dbc.CardDeck([
+                dbc.Card([
+                    dbc.CardHeader(dbc.Row([
+                        dbc.Col(html.I(className="fas fa-bezier-curve fa-2x"), className="col-md-3 my-auto"),
+                        html.P("Build graph representation of multiple sequence alignment", className="col-md-9 my-auto")
+                    ])),
+                    dbc.CardBody([
+                        html.P(html.Ul([
+                            html.Li([
+                                "Input formats: ",
+                                html.A("MAF",
+                                       href="http://www1.bioinf.uni-leipzig.de/UCSC/FAQ/FAQformat.html#format5",
+                                       target="_blank"),
+                                ", ",
+                                html.A("PO",
+                                       href="https://github.com/meoke/pang/blob/master/README.md#po-file-format-specification",
+                                       target="_blank")
+                            ]),
+                            html.Li([
+                                "Internal representation: ",
+                                html.A("Partial Order graph",
+                                       href="https://doi.org/10.1093/bioinformatics/18.3.452",
+                                       target="_blank")
+                            ]),
+                            html.Li([
+                                "Cycles in graph removed with ",
+                                html.A("Mafgraph",
+                                       href="https://github.com/anialisiecka/Mafgraph",
+                                       target="_blank")
+                            ]),
+                            html.Li("Complement missing parts from NCBI or fasta")]), className='card-text')
+                    ]),
+                ]),
+                dbc.Card([
+                    dbc.CardHeader(dbc.Row([
+                        dbc.Col(html.I(className="fas fa-grip-lines fa-2x"), className="col-md-3 my-auto"),
+                        html.P("Find sequences consensus", className="col-md-9 my-auto")
+                    ])),
+                    dbc.CardBody([
+                        html.P([
+                            "This tool extends Partial Order Alignment (POA) algorithm introduced by ",
+                            html.A("Lee et al.",
+                                   href="https://doi.org/10.1093/bioinformatics/18.3.452",
+                                   target="_blank"),
+                            ". It provides:",
+                            html.Ul([
+                                html.Li([
+                                    html.Strong("Consensuses"),
+                                    " - agreed representations of input subsets"]),
+                                html.Li([
+                                    html.Strong("Consensus Tree"),
+                                    " - a structure similar to phylogenetic tree but it has a consensus assigned to every node"]),
+                                html.Li([
+                                    html.Strong("Compatibility"),
+                                    " - a measure of similarity between sequence and consensus"])])
+                        ], className='card-text'),
+                    ]),
+                ]),
+                dbc.Card([
+                    dbc.CardHeader(dbc.Row([
+                        dbc.Col(html.I(className="fas fa-eye fa-2x"), className="col-md-3 my-auto"),
+                        html.P("Visualise results", className="col-md-9 my-auto")
+                    ])),
+                    dbc.CardBody([
+                        html.P([html.Ul([
+                            html.Li("MAF blocks graph"),
+                            html.Li("Multiple sequence alignment as Partial Order Graph"),
+                            html.Li("Consensus tree"),
+                            html.Li("Compatibilities relations")]
+                        )], className='card-text')
+                    ]),
+                ]),
+            ]))
         ])
     )
 
@@ -168,296 +154,12 @@ def package():
 
 def tools():
     return html.Div([
-        dbc.Tabs(
-            [
-                dbc.Tab(_poapangenome_tab_content, id=id_poapangenome_tab, label="PangTreeBuild",
-                        tab_style={"margin-left": "auto"}, className="tools_tab"),
-                dbc.Tab(_pangviz_tab_content, id=id_pangviz_tab, label="PangTreeVis", label_style={"color": "#00AEF9"}, className="tools_tab"),
-            ], className="nav-justified",
-            id=id_tools_tabs,
-        )
+        dbc.Tabs([
+            dbc.Tab(pangtreebuild_tab, id=id_poapangenome_tab, label="PangTreeBuild", tab_style={"margin-left": "auto"}, className="tools_tab"),
+            dbc.Tab(_pangtreeviz_tab, id=id_pangviz_tab, label="PangTreeVis", label_style={"color": "#00AEF9"}, className="tools_tab"),
+        ], className="nav-justified", id=id_tools_tabs,)
     ])
 
-
-_data_type_form = dbc.FormGroup(
-    [
-        dbc.Label("Data Type", html_for=id_data_type, width=3, className="poapangenome_label"),
-        dbc.Col([dbc.RadioItems(value="Nucleotides", options=[{"label": "Nucleotides", "value": "Nucleotides"},
-                                                              {"label": "Aminoacids", "value": "Proteins"}],
-                                id=id_data_type),
-                 dbc.FormText(
-                     "Type of aligned sequences provided in the uploaded multialignment file.",
-                     color="secondary",
-                 )], width=6)
-    ],
-    row=True,
-    style={"display": "none"}
-)
-
-_metadata_upload_form = dbc.FormGroup(
-    [
-        dbc.Label("Sequences metadata", html_for=id_metadata_upload, width=3, className="poapangenome_label"),
-        dbc.Col([dcc.Upload(id=id_metadata_upload,
-                            multiple=False,
-                            children=[
-                                dbc.Row([dbc.Col(html.I(className="fas fa-file-csv fa-2x"),
-                                                 className="col-md-2"),
-                                         html.P(
-                                             "Drag & drop or select file...",
-                                             className="col-md-10")])
-
-                            ], className="file_upload"),
-                 dcc.Store(id=id_metadata_upload_state),
-                 dbc.FormText(
-                     [
-                         "CSV with sequences metadata. It will be included in the visualisation. "
-                         "The 'seqid' column is obligatory and must match"
-                         " sequences identifiers from MULTIALIGNMENT file. "
-                         "Other columns are optional. Example file: ",
-                         html.A("metadata.csv",
-                                href="https://github.com/meoke/pang/blob/master/data/Fabricated/f_metadata.csv",
-                                target="_blank")],
-                     color="secondary",
-                 )
-                 ], width=6),
-        dbc.Label(id=id_metadata_upload_state_info, width=3, className="poapangenome_label")
-    ],
-    row=True
-)
-
-_multialignment_upload_form = dbc.FormGroup(
-    [
-        dbc.Label("Multialignment", html_for=id_multialignment_upload, width=3, className="poapangenome_label"),
-        dbc.Col([dcc.Upload(id=id_multialignment_upload,
-                            multiple=False,
-                            children=[
-                                dbc.Row([dbc.Col(html.I(className="fas fa-align-justify fa-2x"),
-                                                 className="col-md-2"),
-                                         html.P(
-                                             "Drag & drop or select file...",
-                                             className="col-md-10")])
-
-                            ], className="file_upload"),
-                 dcc.Store(id=id_multialignment_upload_state),
-                 dbc.FormText(
-                     [
-                         "Accepted formats: ",
-                         html.A(
-                             href="http://www1.bioinf.uni-leipzig.de/UCSC/FAQ/FAQformat.html#format5",
-                             target="_blank", children="maf"), ", ",
-                         html.A(
-                             href="https://github.com/meoke/pang/blob/master/README.md#po-file-format-specification",
-                             target="_blank", children="po"),
-                         ". See example file: ",
-                         html.A(
-                             href="https://github.com/meoke/pang/blob/master/data/Fabricated/f.maf",
-                             target="_blank",
-                             children="example.maf")],
-                     color="secondary",
-                 )
-                 ], width=6),
-        dbc.Label(id=id_multialignment_upload_state_info, width=3, className="poapangenome_label")
-    ],
-    row=True
-)
-
-_missing_data_form = dbc.Collapse([dbc.FormGroup(
-    [
-        dbc.Label("Missing nucleotides source", html_for=id_fasta_provider_choice, width=3,
-                  className="poapangenome_label"),
-        dbc.Col([dbc.RadioItems(value="NCBI", options=[{'label': "NCBI", 'value': 'NCBI'},
-                                                       {'label': 'Fasta File',
-                                                        'value': 'File'},
-                                                       {'label': 'Custom symbol',
-                                                        'value': 'Symbol'}],
-                                id=id_fasta_provider_choice),
-                 dbc.FormText(
-                     "MAF file may not inlcude full sequences. Specify source of missing nucleotides/proteins.",
-                     color="secondary",
-                 )], width=6)
-    ],
-    row=True
-), dbc.Collapse(id=id_missing_symbol_param, children=[dbc.FormGroup(
-    children=[
-        dbc.Label("Missing symbol for unknown nucleotides/proteins", html_for=id_fasta_provider_choice,
-                  width=3, className="poapangenome_label"),
-        dbc.Col([dbc.Input(value="?",
-                           id=id_missing_symbol_input, type='text', maxLength=1, minLength=1),
-                 dbc.FormText(
-                     "Any single character is accepted but it must be present in BLOSUM file. Default BLOSUM file uses '?'.",
-                     color="secondary",
-                 )], width=6)], row=True
-)]),
-    dbc.Collapse(id=id_fasta_upload_param, children=[dbc.FormGroup(
-        children=[
-            dbc.Label("Missing symbols file source", html_for=id_fasta_provider_choice,
-                      width=3, className="poapangenome_label"),
-            dbc.Col([dcc.Upload(id=id_fasta_upload,
-                                multiple=False,
-                                children=[
-                                    dbc.Row([dbc.Col(html.I(className="fas fa-align-left fa-2x"),
-                                                     className="col-md-2"),
-                                             html.P(
-                                                 "Drag & drop or select file...",
-                                                 className="col-md-10")])
-
-                                ], className="file_upload"),
-                     dcc.Store(id=id_fasta_upload_state),
-                     dbc.FormText(
-                         [
-                             "Provide zip with fasta files or single fasta file. It must contain full sequeneces which are not fully represented in provided MAF file."],
-                         color="secondary",
-                     )
-                     ], width=6),
-            dbc.Label(id=id_fasta_upload_state_info, width=3, className="poapangenome_label")], row=True
-    )])
-], id=id_maf_specific_params)
-
-_consensus_algorithm_form = dbc.FormGroup(
-    [
-        dbc.Label("Consensus algorithm", html_for=id_data_type, width=3, className="poapangenome_label"),
-        dbc.Col([dbc.RadioItems(value="tree", options=[
-            {'label': "Poa", 'value': 'poa'},
-            {'label': 'Tree', 'value': 'tree'},
-        ],
-                                id=id_consensus_algorithm_choice),
-                 dbc.FormText(
-                     [
-                         "There are two available algorithms for consensus tree generation. 'Poa' by ",
-                         html.A(
-                             "Lee et al.",
-                             href="https://doi.org/10.1093/bioinformatics/btg109"),
-                         " and 'Tree' algorithm described ",
-                         html.A("here",
-                                href="https://github.com/meoke/pang#idea-and-algorithm-description")],
-                     color="secondary",
-                 )], width=6)
-    ],
-    row=True
-)
-
-_blosum_upload_form = dbc.FormGroup(
-    [
-        dbc.Label("BLOSUM", html_for=id_blosum_upload, width=3, className="poapangenome_label"),
-        dbc.Col([dcc.Upload(id=id_blosum_upload,
-                            multiple=False,
-                            children=[
-                                dbc.Row([dbc.Col(html.I(className="fas fa-table fa-2x"),
-                                                 className="col-md-2"),
-                                         html.P(
-                                             "Drag & drop or select file...",
-                                             className="col-md-10")])
-
-                            ], className="file_upload"),
-                 dcc.Store(id=id_blosum_upload_state),
-                 dbc.FormText(
-                     [
-                         "This parameter is optional as default BLOSUM file is ", html.A(
-                         href="https://github.com/meoke/pang/blob/master/bin/blosum80.mat",
-                         target="_blank", children="BLOSUM80"),
-                         ". The BLOSUM matrix must contain '?' or the custom symbol for missing nucleotides, if specified."],
-                     color="secondary",
-                 )
-                 ], width=6),
-        dbc.Label(id=id_blosum_upload_state_info, width=3, className="poapangenome_label")
-    ],
-    row=True
-)
-
-_poa_hbmin_form = dbc.Collapse([dbc.FormGroup(
-    [
-        dbc.Label("HBMIN", html_for=id_hbmin_input, width=3,
-                  className="poapangenome_label"),
-        dbc.Col([dbc.Input(value=0.9, type='number', min=0, max=1,
-                           id=id_hbmin_input),
-                 dbc.FormText(
-                     "HBMIN is required minimum value of similarity between sequence and assigned consensus. It must be a value  from range [0,1].",
-                     color="secondary",
-                 )], width=6)
-    ],
-    row=True
-)
-], id=id_poa_specific_params)
-
-_tree_params_form = dbc.Collapse([dbc.FormGroup([
-    dbc.Label("P", html_for=id_hbmin_input, width=3,
-              className="poapangenome_label"),
-    dbc.Col([dbc.Input(value=1, type='number', min=0,
-                       id=id_p_input),
-             dbc.FormText(
-                 ["P is used during cutoff search. P < 1 decreases distances between small compatibilities and increases distances between the bigger ones while P > 1 works in the opposite way. This value must be > 0. ",
-                         html.A("Read more...",
-                                href="https://github.com/meoke/pang",
-                                target="_blank")],
-                 color="secondary",
-             )], width=6)
-],
-    row=True), dbc.FormGroup([
-    dbc.Label("Stop", html_for=id_hbmin_input, width=3,
-              className="poapangenome_label"),
-    dbc.Col([dbc.Input(value=1, type='number', min=0, max=1,
-                       id=id_stop_input),
-             dbc.FormText(
-                 "Minimum value of compatibility in tree leaves. It must be a value  from range [0,1].",
-                 color="secondary",
-             )], width=6)
-],
-    row=True)], id=id_tree_specific_params)
-
-_output_form = dbc.FormGroup(
-    [
-        dbc.Label("Additional output generation", html_for=id_output_configuration, width=3,
-                  className="poapangenome_label"),
-        dbc.Col([dbc.Checklist(id=id_output_configuration,
-                               options=[
-                                   {
-                                       'label': 'FASTA (all sequences and consensuses in fasta format)',
-                                       'value': 'fasta'},
-                                   {'label': 'PO (poagraph in PO format)', 'value': 'po'},
-                               ],
-                               values=['fasta', 'po'])], width=6)
-        ,
-    ], row=True
-)
-
-_poapangenome_form = dbc.Form([
-                               _data_type_form,
-                               _metadata_upload_form,
-                               _multialignment_upload_form,
-                               _missing_data_form,
-                               _blosum_upload_form,
-                               _consensus_algorithm_form,
-                               _poa_hbmin_form,
-                               _tree_params_form,
-                               _output_form
-                               ])
-
-_poapangenome_tab_content = html.Div([
-    dcc.Store(id=id_session_state),
-    dcc.Store(id=id_session_dir),
-    dbc.Row([
-        dbc.Col(
-            [
-                html.H3("Task Parameters"),
-                _poapangenome_form,
-                dbc.Row(
-                    dbc.Col(dbc.Button("Run", id=id_pang_button, color="primary", className="offset-md-5 col-md-4 ")),
-                    dbc.Col(dcc.Loading(id="l2", children=html.Div(id=id_running_indicator), type="default")))
-            ], className="col-md-6 offset-md-1", id='poapangenome_form'),
-    ], className="poapangenome_content"),
-    dbc.Collapse(id=id_poapangenome_result, children=dbc.Row(
-        children=[dbc.Col([dbc.Row([html.I(id=id_result_icon), html.H3("Task completed!", className="next_to_icon")]),
-                           dbc.Col(html.Div(id=id_poapangenome_result_description), className="col-md-11")],
-                          className="col-md-6 offset-md-1"),
-                  dbc.Col([
-                      html.A(dbc.Button("Download result files", block=True, className="result_btn", color="info"),
-                             id=id_download_processing_result),
-                      dbc.Button("Go to visualisation", id=id_go_to_vis_tab,
-                                 n_clicks_timestamp=0, block=True, className="result_btn", color="success", style={"visibility": "hidden"})],
-                      className="col-md-3 offset-md-1")]
-
-    ))
-])
 
 _load_pangenome_row = dbc.Row(id=id_pangviz_load_row,
                               children=[
@@ -666,7 +368,7 @@ _consensus_table_row = dbc.Row(children=[dbc.Col(html.H4("Consensuses on current
                                                                        sorting_type="multi"), type="circle")), width=12, style={'overflow-x': 'scroll'})], className="vis_row")
 
 loading_style="circle"
-_pangviz_tab_content = dbc.Container([
+_pangtreeviz_tab = dbc.Container([
     dcc.Store(id=id_visualisation_session_info, data=""),
     dcc.Store(id=id_elements_cache_info, data=""),
     dbc.Row(style={'display': 'none'}, children=[html.Div(id=id_pangenome_hidden),
