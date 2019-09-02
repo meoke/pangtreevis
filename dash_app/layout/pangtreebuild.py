@@ -197,7 +197,7 @@ pangtreebuild_tab = html.Div([
             dbc.Row(
                 dbc.Col(dbc.Button("Run", id=id_pang_button, color="primary", className="offset-md-5 col-md-4 ")),
                 dbc.Col(dcc.Loading(id="l2", children=html.Div(id=id_running_indicator), type="default")))
-            ], className="col-md-6 offset-md-1", id='poapangenome_form'),
+            ], className="col-md-8 offset-md-1", id='poapangenome_form'),
     ], className="poapangenome_content"),
     dbc.Collapse(id=id_poapangenome_result, children=dbc.Row(children=[
         dbc.Col([
