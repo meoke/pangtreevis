@@ -247,16 +247,16 @@ def update_cached_poagraph_elements_faster(user_session_elements_id, jsonpangeno
     def get_cytoscape_edge(source, target, weight, cl) -> CytoscapeEdge:
         return {'data': {'label': cl, 'source': source, 'target': target, 'weight': weight}, 'classes': cl}
 
-    def get_poagraph_elements() -> Tuple[List[CytoscapeNode], Dict[int, List[CytoscapeEdge]]]:
+    def get_poagraph_elements() -> Tuple(List(CytoscapeNode), Dict(int, List(CytoscapeEdge))):
         sequences_nodes = [get_cytoscape_node(id=node_id,
-                                     label=node_info[3],
-                                     x=node_info[0],
-                                     y=node_info[1],
-                                     cl='s_node',
-                                     sequences_ids=nodes_to_sequences[node_id],
-                                     consensus_ids=[])
-                                     # consensus_ids=node_data['consensus_ids'])
-                 for node_id, node_info in enumerate(nodes)]
+                                              label=node_info[3],
+                                              x=node_info[0],
+                                              y=node_info[1],
+                                              cl='s_node',
+                                              sequences_ids=nodes_to_sequences[node_id],
+                                              consensus_ids=[])
+                                              # consensus_ids=node_data['consensus_ids'])
+                           for node_id, node_info in enumerate(nodes)]
         # consensuses_nodes = [get_cytoscape_node(id=node_id,
         #                                       label=node_info[3],
         #                                       x=node_info[0],
@@ -375,8 +375,7 @@ def update_cached_poagraph_elements_faster(user_session_elements_id, jsonpangeno
 
 
 def get_poagraph_elements_faster(elements_cache_info, relayout_data):
-    def recalc(x):
-        return x //  15
+
     with open(elements_cache_info, 'rb') as i:
         poagraph_elements = pickle.load(i)
     # poagraph_elements = session[elements_cache_info]
@@ -386,7 +385,7 @@ def get_poagraph_elements_faster(elements_cache_info, relayout_data):
         max_x = int(relayout_data['xaxis.range[1]'])
         visible_axis_length = abs(max_x - min_x)
         min_x = max(0, min_x + int(max_column_id *0.3))
-        max_x = min(min_x + int(0.3 * max_column_id), max_column_id)#visible_axis_length // 3 * 2
+        max_x = min(min_x + int(0.3 * max_column_id), max_column_id)  # visible_axis_length // 3 * 2
     except KeyError:
         min_x = int(0.3*max_column_id)
         max_x = int(0.6*max_column_id)

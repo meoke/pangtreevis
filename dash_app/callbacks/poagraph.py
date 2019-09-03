@@ -8,6 +8,8 @@ from ..layout.layout_ids import *
 from ..server import app
 from time import time
 from ..app import draw_poagraph
+
+
 @app.callback(Output(id_full_pangenome_graph, 'figure'),
               [Input(id_pangenome_upload, 'contents')])
 def get_full_pangenome_graph(pangenome_upload_contents):
@@ -16,6 +18,7 @@ def get_full_pangenome_graph(pangenome_upload_contents):
     jsonpangenome = visualisation.read_pangenome_upload(pangenome_upload_contents)
     return poagraph.get_pangenome_figure_faster(jsonpangenome)
 
+
 @app.callback(Output(id_visualisation_session_info, 'data'),
               [Input(id_pangenome_upload, 'contents')])
 def update_pangenome_hash(pangenome_upload_contents):
@@ -23,6 +26,7 @@ def update_pangenome_hash(pangenome_upload_contents):
         raise PreventUpdate()
     hashed_contents = visualisation.get_hash(pangenome_upload_contents)
     return hashed_contents
+
 
 @app.callback(Output(id_elements_cache_info, 'data'),
               [Input(id_visualisation_session_info, 'data')],

@@ -24,7 +24,7 @@ app.layout = html.Div([
                            href="/#"), className="high"),
             html.Li(html.A([html.I(className="fas fas-nav fa-seedling"), html.Span("PangTreeBuild", className="nav-text")],
                            href="/pangtreebuild"), className="has-subnav high"),
-            html.Li(html.A([html.I(className="fas fas-nav fa-tree"), html.Span("TPangTreeVis", className="nav-text")],
+            html.Li(html.A([html.I(className="fas fas-nav fa-tree"), html.Span("PangTreeVis", className="nav-text")],
                            href="/pangtreevis"), className="has-subnav high"),
             html.Li(html.A([html.I(className="fas fas-nav fa-archive"), html.Span("Package", className="nav-text")],
                            href="/package"), className="has-subnav high"),
