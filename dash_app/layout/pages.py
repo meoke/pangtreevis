@@ -16,12 +16,12 @@ def contact():
         dbc.Card([
             dbc.CardBody([
                 html.H5("Norbert Dojer, PhD.", className="card-title text-info"),
-                html.P(html.P("dojer@mimuw.edu.pl"), className='card-text'),
+                html.P("dojer@mimuw.edu.pl", className='card-text'),
             ]),
         ], outline=True, color="info"),
         dbc.Card([
             dbc.CardBody([
-                html.H5("Paulina Dziadkiewicz, B.Sc.", className="card-title text-info"),
+                html.H5("Paulina Dziadkiewicz, M.Sc.", className="card-title text-info"),
                 html.P("pedziadkiewicz@gmail.com", className='card-text'),
             ])
         ], outline=True, color="info"),
@@ -183,7 +183,7 @@ _load_pangenome_row = dbc.Row(id=id_pangviz_load_row,
                                                                       "Drag & drop pangenome.json file or select file..",
                                                                       className="col-md-10")])
 
-                                                     ], className="file_upload"), width={"size": 4, "offset": 4}),
+                                                     ], className="file_upload"), width={"size": 6, "offset": 3}),
                               ])
 
 _task_parameters_row = dbc.Row(id=id_task_parameters_row,
@@ -330,12 +330,11 @@ _pangtreeviz_tab = dbc.Container([
     _load_pangenome_row,
     dbc.Collapse(
         id=id_pangviz_result_collapse,
-        children=[_task_parameters_row,
-                  _input_data_row,
-                  _pangenome_row,
-                  _poagraph_row,
-                  _consensus_tree_row,
-                  _consensus_table_row])
+        children=[
+            html.Details([html.Summary('Task parameters'), _task_parameters_row]),
+            html.Details([html.Summary('Pangenome'), _input_data_row, _pangenome_row, _poagraph_row]),
+            html.Details([html.Summary('Tree'), _consensus_tree_row, _consensus_table_row]),
+        ])
 ], fluid=True)
 
 

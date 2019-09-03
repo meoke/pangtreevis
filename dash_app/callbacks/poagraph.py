@@ -1,12 +1,12 @@
+import dash
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 from dash_app.components import poagraph
-import dash
-from ..components import tools, visualisation
-from ..layout.layout_ids import *
 
-from ..server import app
 from ..app import draw_poagraph
+from ..components import visualisation
+from ..layout.layout_ids import *
+from ..server import app
 
 
 @app.callback(Output(id_full_pangenome_graph, 'figure'),
