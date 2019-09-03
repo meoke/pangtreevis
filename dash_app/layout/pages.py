@@ -136,9 +136,9 @@ def index():
 
 def package():
     return dbc.Container([dbc.Row(html.Span(["The underlying software is available at ",
-                                             html.A("GitHub", href="https://github.com/meoke/pang", target="_blank"),
-                                             " and ",
-                                             html.A("PyPI", href="", target="_blank"),
+                                             html.A("GitHub", href="https://github.com/meoke/pangtree", target="_blank"),
+                                             # " and ",
+                                             # html.A("PyPI", href="", target="_blank"),
                                              ". It can be incorporated into your Python application in this simple way:"])),
                           dbc.Card(dbc.CardBody(dcc.Markdown('''
 
@@ -147,19 +147,19 @@ def package():
 
                           poagraph = Poagraph.build_from_dagmaf(input_types.Maf("example.maf"), 
                                                                 fasta_provider.FromNCBI())
-                          consensus_tree = consensus.tree_generator.get_consensus_tree(poagraph,
-                                                                                       Blosum("BLOSUM80.mat"),
-                                                                                       output_dir,
-                                                                                       stop=1,
-                                                                                       p=1)
-                          pangenomejson = to_PangenomeJSON(poagraph, consensus_tree)
+                          affinity_tree = consensus.tree_generator.get_affinity_tree(poagraph,
+                                                                                     Blosum("BLOSUM80.mat"),
+                                                                                     output_dir,
+                                                                                     stop=1,
+                                                                                     p=1)
+                          pangenomejson = to_PangenomeJSON(poagraph, affinity_tree)
                           
                           ''')), style={"margin": '30px 0px', 'padding': '10px'}),
                           dbc.Row("or used as a CLI tool:"),
                           dbc.Card(dbc.CardBody(dcc.Markdown(
                               '''pangtreebuild --multialignment "example.maf" --consensus tree --p 1 --stop 1''')),
                               style={"margin": '30px 0px', 'padding': '10px'}),
-                          dbc.Row("Check out full documentation at the above links.")
+                          dbc.Row("Check out full documentation at the above link.")
                           ]
                          )
 
@@ -181,25 +181,15 @@ _load_pangenome_row = dbc.Row(id=id_pangviz_load_row,
                                                                           className="col-md-2"),
                                                                   html.P(
                                                                       "Drag & drop pangenome.json file or select file..",
-                                                                      className="col-md-8")])
+                                                                      className="col-md-10")])
 
-                                                     ], className="file_upload"), width={"size": 6, "offset": 3}),
-                                  # dbc.Col("or", id=id_or, width=2),
-                                  # dbc.Col(dbc.DropdownMenu(
-                                  #     id=id_examples_dropdown,
-                                  #     label="load example data",
-                                  #     children=[
-                                  #         dbc.DropdownMenuItem("Ebola", id_pangviz_example_ebola),
-                                  #     ], bs_size="lg"
-                                  # ), width=4)
-
+                                                     ], className="file_upload"), width={"size": 4, "offset": 4}),
                               ])
 
 _task_parameters_row = dbc.Row(id=id_task_parameters_row,
-                               children=html.Div([
-                                   html.Div(html.H3("Task parameters"), className="panel-heading"),
-                                   dcc.Loading(html.Div(id=id_task_parameters_vis, className="panel-body"), type="circle")
-                               ], style={'margin': 'auto', 'text-align': 'center'}),
+                               children=html.Div([html.Div(html.H3("Task parameters"), className="panel-heading"),
+                                                  dcc.Loading(html.Div(id=id_task_parameters_vis, className="panel-body"), type="circle")],
+                                                 ),
                                className="vis_row")
 
 _input_data_row = dbc.Row(style={'display':'none'},children=[dbc.Col(html.Div(id=id_input_info_vis)),
@@ -226,7 +216,7 @@ _pangenome_row = dbc.Row(children=[dbc.Col(html.H4("Pangenome - Cut Width statis
                                    dbc.Col([html.P("Representation of full poagraph as Cut Width statistics."),
                                             html.P("Cut Width - edges count between two consecutive columns."),
                                             html.I(id="arrow_icon",
-                                                   className="fas fa-long-arrow-alt-down fa-5x")],
+                                                   className="fas fa-level-down-alt fa-flip-horizontal fa-5x")],
                                            width=2),
                                    dbc.Col(html.Div(id=id_full_pangenome_container,
                                                     style={'visibility': 'hidden'},
@@ -319,59 +309,6 @@ _consensus_tree_row = dbc.Row(children=[dbc.Col([html.H4("Consensus Tree")], wid
                                                               sorting=True
                                                           ), type="circle")], width=3)], className="vis_row")
 
-_consensus_tree_row = dbc.Row(children=[
-    dbc.Col(children=[dcc.Graph(
-        id=id_consensus_tree_graph,
-        style={'height': '1000px', 'width': 'auto'}
-    ),
-        dcc.Slider(
-            id=id_consensus_tree_slider,
-            min=0,
-            max=1,
-            marks={
-                int(i) if i % 1 == 0 else i: '{}'.format(i)
-                for i
-                in
-                [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8,
-                 0.9,
-                 1]},
-            step=0.01,
-            value=0.5,
-            dots=True
-        )
-    ], className="col-md-8"),
-    dbc.Col(children=[html.H5("Metadata in consensuses tree leaves:"),
-                      dcc.Dropdown(
-                          id=id_leaf_info_dropdown,
-                          style={'margin-bottom': '20px'},
-                          options=[
-                          ],
-                          value='SEQID'
-                      ),
-                      html.H5("Consensus tree node details:"),
-                      html.H5(
-                          id=id_consensus_node_details_header
-                      ),
-                      html.Img(
-                          id=id_consensus_node_details_distribution,
-                      ),
-                      dash_table.DataTable(
-                          id=id_consensus_node_details_table,
-                          style_table={
-                              'maxHeight': '800',
-                              'overflowY': 'scroll'
-                          },
-                          style_cell={'textAlign': 'left'},
-                          sorting=True
-                      )], className="col-md-4")
-])
-
-_consensus_table_row = dbc.Row(html.Div(id=id_consensus_table_container,
-                                        children=[dash_table.DataTable(id=id_consensuses_table,
-                                                                       sorting=True,
-                                                                       sorting_type="multi")
-
-                                                  ], style={'width': 'auto'}))
 
 _consensus_table_row = dbc.Row(children=[dbc.Col(html.H4("Consensuses on current Consensus Tree cut level"), width=12),
                                   dbc.Col(html.Div(id=id_consensus_table_container,

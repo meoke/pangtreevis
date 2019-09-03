@@ -5,9 +5,10 @@ import dash_html_components as html
 from .server import app
 from .layout import layout_ids, pages
 
-app.title = 'PoaPangenome'
+app.title = 'PangtreeVis'
 app.config.suppress_callback_exceptions = True
 draw_poagraph = True
+
 
 external_css = [
     'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
@@ -66,5 +67,4 @@ from .callbacks import consensustable
 from .callbacks import consensustree
 from .callbacks import mafgraph
 from .callbacks import poagraph
-from .callbacks import poapangenome
 from .callbacks import visualisation
