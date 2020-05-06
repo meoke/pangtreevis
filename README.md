@@ -1,5 +1,7 @@
 # PangtreeVis
 
+This repository is no longer supported. The project was moved to: https://github.com/PangTree/PangTreeGUI
+
 ## About
 PangtreeVis is a web-browser tool. It enables direct calling [PangtreeBuild](https://github.com/meoke/pangtree) but also loading the JSON file which is the result of calling PangtreeBuild.
 
